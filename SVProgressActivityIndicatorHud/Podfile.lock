@@ -1,0 +1,15 @@
+PODS:
+  - DGActivityIndicatorView (2.1.1)
+  - SVProgressHUD (2.1.2)
+
+DEPENDENCIES:
+  - DGActivityIndicatorView
+  - SVProgressHUD
+
+SPEC CHECKSUMS:
+  DGActivityIndicatorView: ff2c76073d79692f724863c8dd38685866a03cb6
+  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+
+PODFILE CHECKSUM: d3a498ef225ead33dde2f63f0d5dca341843231b
+
+COCOAPODS: 1.2.0
