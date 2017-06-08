@@ -14,6 +14,7 @@
 		A56325771EE68BCD00F37FD9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A56325751EE68BCD00F37FD9 /* Main.storyboard */; };
 		A56325791EE68BCD00F37FD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A56325781EE68BCD00F37FD9 /* Assets.xcassets */; };
 		A563257C1EE68BCD00F37FD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A563257A1EE68BCD00F37FD9 /* LaunchScreen.storyboard */; };
+		A57004081EE9002A00DE9584 /* SVProgressHUD+DGActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A57004071EE9002A00DE9584 /* SVProgressHUD+DGActivityIndicatorView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,8 @@
 		A56325781EE68BCD00F37FD9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A563257B1EE68BCD00F37FD9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A563257D1EE68BCD00F37FD9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A57004061EE9002A00DE9584 /* SVProgressHUD+DGActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+DGActivityIndicatorView.h"; sourceTree = "<group>"; };
+		A57004071EE9002A00DE9584 /* SVProgressHUD+DGActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+DGActivityIndicatorView.m"; sourceTree = "<group>"; };
 		ECBAABD73625F980A57FEF49 /* Pods-SVProgressActivityIndicatorHud.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVProgressActivityIndicatorHud.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SVProgressActivityIndicatorHud/Pods-SVProgressActivityIndicatorHud.debug.xcconfig"; sourceTree = "<group>"; };
 		F1BD0410DC5CAD464AB7DBCB /* libPods-SVProgressActivityIndicatorHud.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SVProgressActivityIndicatorHud.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA63CF142D2792513262A4B2 /* Pods-SVProgressActivityIndicatorHud.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SVProgressActivityIndicatorHud.release.xcconfig"; path = "Pods/Target Support Files/Pods-SVProgressActivityIndicatorHud/Pods-SVProgressActivityIndicatorHud.release.xcconfig"; sourceTree = "<group>"; };
@@ -53,9 +56,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		A512C4901EE7AFF6005AB115 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A57004061EE9002A00DE9584 /* SVProgressHUD+DGActivityIndicatorView.h */,
+				A57004071EE9002A00DE9584 /* SVProgressHUD+DGActivityIndicatorView.m */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		A56325601EE68BCD00F37FD9 = {
 			isa = PBXGroup;
 			children = (
+				A512C4901EE7AFF6005AB115 /* Sources */,
 				A563256B1EE68BCD00F37FD9 /* SVProgressActivityIndicatorHud */,
 				A563256A1EE68BCD00F37FD9 /* Products */,
 				45C39271ACA2DA87E73C30D3 /* Pods */,
@@ -227,6 +240,7 @@
 			files = (
 				A56325741EE68BCD00F37FD9 /* ViewController.m in Sources */,
 				A56325711EE68BCD00F37FD9 /* AppDelegate.m in Sources */,
+				A57004081EE9002A00DE9584 /* SVProgressHUD+DGActivityIndicatorView.m in Sources */,
 				A563256E1EE68BCD00F37FD9 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,9 +363,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SVProgressActivityIndicatorHud/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"SVProgressHUD\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = DavidDay.SVProgressActivityIndicatorHud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -363,9 +392,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SVProgressActivityIndicatorHud/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"SVProgressHUD\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = DavidDay.SVProgressActivityIndicatorHud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

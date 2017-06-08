@@ -7,23 +7,33 @@
 //
 
 #import "ViewController.h"
+#import "SVProgressHUD+DGActivityIndicatorView.h"
 
 @interface ViewController ()
-
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)show:(UIButton *)sender {
+    [SVProgressHUD show];
 }
 
+- (IBAction)dismiss:(UIButton *)sender {
+    [SVProgressHUD dismiss];
+}
+
+- (IBAction)setting:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (sender.isSelected) {
+        [SVProgressHUD setActivityIndicatorType:arc4random()%32 tintColor:[UIColor whiteColor]];
+    }else{
+        [SVProgressHUD unsetActivityIndicator];
+    }
+}
 
 @end
