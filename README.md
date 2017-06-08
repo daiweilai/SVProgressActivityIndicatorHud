@@ -2,16 +2,28 @@ SVProgressActivityIndicatorHud
 =================================
 To enhance SVProgressHud, let it support more beautify animation from DGActivityIndicatorView
 
+
 Using
 -----------------------------------
-*import
-		#import "SVProgressHUD+DGActivityIndicatorView.h"
 
-*set animation type
-		[SVProgressHUD setActivityIndicatorType:TYPE tintColor:TINTCOLOR];
+#### import
 
-*unset animation type
-		[SVProgressHUD unsetActivityIndicator];		
+```objective-c
+#import "SVProgressHUD+DGActivityIndicatorView.h"
+```
+
+#### set animation type
+
+```objective-c
+[SVProgressHUD setActivityIndicatorType:TYPE tintColor:TINTCOLOR];
+```
+
+#### unset animation type
+
+```objective-c
+[SVProgressHUD unsetActivityIndicator];		
+```
+
 
 License  
 -----------------------------------
