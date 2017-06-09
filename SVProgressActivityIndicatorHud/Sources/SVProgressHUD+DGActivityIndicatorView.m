@@ -8,6 +8,8 @@
 
 #import "SVProgressHUD+DGActivityIndicatorView.h"
 #import <objc/runtime.h>
+static char const * const DD_TINTCOLOR_TAG = "DD_TINTCOLOR_TAG";
+static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
 
 @interface CustomSVIndefiniteAnimatedView:SVIndefiniteAnimatedView
 -(instancetype)initWithType:(DDActivityIndicatorAnimationType)type tintColor:(UIColor*)color;
@@ -22,6 +24,7 @@
     if (!hud) {
         return;
     }
+    objc_setAssociatedObject(hud, DD_INDICATOR_TYPE_TAG, nil , OBJC_ASSOCIATION_RETAIN);
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     UIVisualEffectView* hudVibrancyView = [hud valueForKey:@"_hudVibrancyView"];
     if (hudVibrancyView) {
@@ -47,11 +50,12 @@
     }
 }
 
-+(void)setActivityIndicatorType:(DDActivityIndicatorAnimationType)type tintColor:(UIColor*)tintColor{
++(void)setActivityIndicatorType:(DDActivityIndicatorAnimationType)type{
     SVProgressHUD* hud = [self getSVProgressHUD];
     if (!hud) {
         return;
     }
+    objc_setAssociatedObject(hud, DD_INDICATOR_TYPE_TAG, @(type) , OBJC_ASSOCIATION_RETAIN);
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     UIVisualEffectView* hudVibrancyView = [hud valueForKey:@"_hudVibrancyView"];
     if (hudVibrancyView) {
@@ -72,19 +76,46 @@
     }
 #endif
     id indefiniteAnimatedView = [hud valueForKey:@"_indefiniteAnimatedView"];
-    if (indefiniteAnimatedView) {
-        if ([indefiniteAnimatedView isKindOfClass:[CustomSVIndefiniteAnimatedView class]]) {
-            if (((CustomSVIndefiniteAnimatedView*)indefiniteAnimatedView).indicatorAnimationType == type) {
-                return;
+    [hud setValue:nil forKey:@"_indefiniteAnimatedView"];
+    
+    UIColor* tintColor = objc_getAssociatedObject(hud, DD_TINTCOLOR_TAG);
+    if (!tintColor) {
+        id styleObj = [hud valueForKey:@"_defaultStyle"];
+        if (styleObj) {
+            SVProgressHUDStyle style = ((NSNumber*)styleObj).integerValue;
+            switch (style) {
+                case SVProgressHUDStyleLight:
+                    tintColor = [UIColor blackColor];
+                    break;
+                case SVProgressHUDStyleDark:
+                    tintColor = [UIColor whiteColor];
+                    break;
+                default:
+                    tintColor = [UIColor whiteColor];
+                    break;
             }
         }
     }
-    [hud setValue:nil forKey:@"_indefiniteAnimatedView"];
     CustomSVIndefiniteAnimatedView* view = [[CustomSVIndefiniteAnimatedView alloc] initWithType:type tintColor:tintColor];
     [hud setValue:view forKey:@"_indefiniteAnimatedView"];
     if ([SVProgressHUD isVisible]) {
         [SVProgressHUD show];
     }
+}
+
++(void)updateActivityIndicator{
+    SVProgressHUD* hud = [self getSVProgressHUD];
+    NSNumber* type = objc_getAssociatedObject(hud, DD_INDICATOR_TYPE_TAG);
+    if (type) {
+        [self setActivityIndicatorType:type.integerValue];
+    }
+}
+
++(void)setActivityIndicatorTintColor:(UIColor*)tintColor{
+    SVProgressHUD* hud = [self getSVProgressHUD];
+    objc_setAssociatedObject(hud, DD_TINTCOLOR_TAG, tintColor , OBJC_ASSOCIATION_RETAIN);
+    [self updateActivityIndicator];
+    
 }
 
 +(SVProgressHUD*)getSVProgressHUD{
@@ -95,8 +126,8 @@
     }
     return nil;
 }
-@end
 
+@end
 
 @implementation CustomSVIndefiniteAnimatedView
 

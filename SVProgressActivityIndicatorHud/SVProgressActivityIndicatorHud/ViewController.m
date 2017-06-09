@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
 }
 
 - (IBAction)show:(UIButton *)sender {
@@ -32,7 +32,7 @@
 - (IBAction)setting:(UIButton *)sender {
     sender.selected = !sender.selected;
     if (sender.isSelected) {
-        [SVProgressHUD setActivityIndicatorType:_currentType tintColor:[UIColor whiteColor]];
+        [SVProgressHUD setActivityIndicatorType:_currentType];
     }else{
         [SVProgressHUD unsetActivityIndicator];
     }
@@ -43,6 +43,10 @@
         [_settingButton setSelected:YES];
     }
     _currentType = arc4random()%32;
-    [SVProgressHUD setActivityIndicatorType:_currentType tintColor:[UIColor whiteColor]];
+    [SVProgressHUD setActivityIndicatorType:_currentType];
+    CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
+    [SVProgressHUD setActivityIndicatorTintColor:[UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1]];
 }
 @end
