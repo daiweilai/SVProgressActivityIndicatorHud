@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LP0-mg-mmv">
-                                <rect key="frame" x="67.5" y="517" width="240" height="150"/>
+                                <rect key="frame" x="67.5" y="467" width="240" height="200"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fUt-Pk-4RL">
                                         <rect key="frame" x="101" y="0.0" width="37" height="30"/>
@@ -48,9 +48,17 @@
                                             <action selector="setting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UhL-dy-YoW"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FqO-IN-BrA">
+                                        <rect key="frame" x="59.5" y="138" width="121" height="30"/>
+                                        <state key="normal" title="randomAnimation"/>
+                                        <connections>
+                                            <action selector="random:" destination="BYZ-38-t0r" eventType="touchUpInside" id="14u-do-Gpb"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="FqO-IN-BrA" firstAttribute="centerX" secondItem="LP0-mg-mmv" secondAttribute="centerX" id="0tK-lL-nCL"/>
                                     <constraint firstItem="nnx-mX-2ax" firstAttribute="top" secondItem="N0G-jO-LsT" secondAttribute="bottom" constant="20" id="Jjd-zf-fY6"/>
                                     <constraint firstItem="nnx-mX-2ax" firstAttribute="centerX" secondItem="LP0-mg-mmv" secondAttribute="centerX" id="WBC-C9-KrF"/>
                                     <constraint firstAttribute="width" constant="240" id="aki-ED-wL1"/>
@@ -58,7 +66,8 @@
                                     <constraint firstItem="fUt-Pk-4RL" firstAttribute="top" secondItem="LP0-mg-mmv" secondAttribute="top" id="gnx-jB-HV8"/>
                                     <constraint firstItem="N0G-jO-LsT" firstAttribute="centerX" secondItem="LP0-mg-mmv" secondAttribute="centerX" id="nyZ-em-Po4"/>
                                     <constraint firstItem="fUt-Pk-4RL" firstAttribute="centerX" secondItem="LP0-mg-mmv" secondAttribute="centerX" id="pxD-zl-Pff"/>
-                                    <constraint firstAttribute="height" constant="150" id="uYW-IL-ptV"/>
+                                    <constraint firstAttribute="height" constant="200" id="uYW-IL-ptV"/>
+                                    <constraint firstItem="FqO-IN-BrA" firstAttribute="top" secondItem="nnx-mX-2ax" secondAttribute="bottom" constant="8" id="xFf-MX-Btp"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -68,6 +77,9 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="LP0-mg-mmv" secondAttribute="bottom" id="Rxu-fc-EZ1"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="settingButton" destination="nnx-mX-2ax" id="t5y-Fd-Bdw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

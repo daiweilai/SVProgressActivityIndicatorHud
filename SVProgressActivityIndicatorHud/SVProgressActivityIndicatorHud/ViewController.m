@@ -10,6 +10,8 @@
 #import "SVProgressHUD+DGActivityIndicatorView.h"
 
 @interface ViewController ()
+@property(nonatomic,assign)DDActivityIndicatorAnimationType currentType;
+@property (weak, nonatomic) IBOutlet UIButton *settingButton;
 @end
 
 @implementation ViewController
@@ -30,10 +32,17 @@
 - (IBAction)setting:(UIButton *)sender {
     sender.selected = !sender.selected;
     if (sender.isSelected) {
-        [SVProgressHUD setActivityIndicatorType:arc4random()%32 tintColor:[UIColor whiteColor]];
+        [SVProgressHUD setActivityIndicatorType:_currentType tintColor:[UIColor whiteColor]];
     }else{
         [SVProgressHUD unsetActivityIndicator];
     }
 }
 
+- (IBAction)random:(id)sender {
+    if (!_settingButton.isSelected) {
+        [_settingButton setSelected:YES];
+    }
+    _currentType = arc4random()%32;
+    [SVProgressHUD setActivityIndicatorType:_currentType tintColor:[UIColor whiteColor]];
+}
 @end
