@@ -75,7 +75,6 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
         }
     }
 #endif
-    id indefiniteAnimatedView = [hud valueForKey:@"_indefiniteAnimatedView"];
     [hud setValue:nil forKey:@"_indefiniteAnimatedView"];
     
     UIColor* tintColor = objc_getAssociatedObject(hud, DD_TINTCOLOR_TAG);
@@ -149,7 +148,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
 
 - (CALayer*)generateActivityIndicatorLayer{
     
-    CGSize size = self.frame.size;
+    CGSize size = CGSizeMake(self.frame.size.width*2.f/3.f, self.frame.size.height*2.f/3.f);
     CALayer* layer = [CALayer new];
     UIColor* tintColor = self.tintColor;
     
