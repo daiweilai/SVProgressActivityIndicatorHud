@@ -1,10 +1,19 @@
 SVProgressActivityIndicatorHud
 =================================
-To enhance SVProgressHud, let it support more beautify animation from DGActivityIndicatorView
+To enhance [SVProgressHud](https://github.com/SVProgressHUD/SVProgressHUD){:target="_blank"}, let it support more beautify animation from [DGActivityIndicatorView](https://github.com/gontovnik/DGActivityIndicatorView){:target="_blank"}
 
+Demo Snapshot  
+----------------------------------- 
+![github](https://github.com/daiweilai/SVProgressActivityIndicatorHud/blob/master/snapshot.gif "github")
 
 Using
 -----------------------------------
+#### install SVProgressHud
+if you are using SVProgressHud in your project just skip this part！
+Otherwise,just check the [SVProgressHud installation guide](https://github.com/SVProgressHUD/SVProgressHUD){:target="_blank"} .
+
+#### install SVProgressActivityIndicatorHud
+* Drag the SVProgressActivityIndicatorHud/SVProgressActivityIndicatorHud/Sources/* files into your project.
 
 #### import
 
@@ -15,7 +24,14 @@ Using
 #### set animation type
 
 ```objective-c
-[SVProgressHUD setActivityIndicatorType:TYPE tintColor:TINTCOLOR];
+[SVProgressHUD setActivityIndicatorType:TYPE];
+```
+
+
+#### set tint color
+
+```objective-c
+[SVProgressHUD setActivityIndicatorTintColor:TINT_COLOR];
 ```
 
 #### unset animation type
@@ -24,6 +40,10 @@ Using
 [SVProgressHUD unsetActivityIndicator];		
 ```
 
+Then，use it like SVProgressHud way
+```objective-c
+[SVProgressHUD show];		
+```
 
 License  
 -----------------------------------
