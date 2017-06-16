@@ -1,6 +1,6 @@
 SVProgressActivityIndicatorHud
 =================================
-To enhance [SVProgressHud](https://github.com/SVProgressHUD/SVProgressHUD){:target="_blank"}, let it support more beautify animation from [DGActivityIndicatorView](https://github.com/gontovnik/DGActivityIndicatorView){:target="_blank"}
+To enhance <a href="https://github.com/SVProgressHUD/SVProgressHUD" target="_blank">SVProgressHud</a>, let it support more beautify animation from [DGActivityIndicatorView](https://github.com/gontovnik/DGActivityIndicatorView){:target="_blank"}
 
 Demo Snapshot  
 ----------------------------------- 
