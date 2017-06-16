@@ -12,69 +12,51 @@ static char const * const DD_TINTCOLOR_TAG = "DD_TINTCOLOR_TAG";
 static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
 
 @interface CustomSVIndefiniteAnimatedView:SVIndefiniteAnimatedView
--(instancetype)initWithType:(DDActivityIndicatorAnimationType)type tintColor:(UIColor*)color;
-@property (nonatomic, strong) CALayer *indefiniteAnimatedLayer;
+- (instancetype)initWithType:(DDActivityIndicatorAnimationType)type tintColor:(UIColor* __nonnull)color;
+@property (nonatomic)CALayer *indefiniteAnimatedLayer;
+@property (nonatomic)UIColor* tintColor;
 @property (nonatomic, assign)DDActivityIndicatorAnimationType indicatorAnimationType;
-@property (nonatomic,strong)UIColor* tintColor;
 @end
 
 @implementation SVProgressHUD(DDActivityIndicatorView)
-+(void)unsetActivityIndicator{
++ (void)unsetActivityIndicator{
     SVProgressHUD* hud = [self getSVProgressHUD];
     if (!hud) {
         return;
     }
     objc_setAssociatedObject(hud, DD_INDICATOR_TYPE_TAG, nil , OBJC_ASSOCIATION_RETAIN);
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    UIVisualEffectView* hudVibrancyView = [hud valueForKey:@"_hudVibrancyView"];
-    if (hudVibrancyView) {
-        for (id subView in hudVibrancyView.contentView.subviews) {
-            if ([subView isKindOfClass:[CustomSVIndefiniteAnimatedView class]]) {
-                [((UIView*)subView) removeFromSuperview];
-            }
-        }
-    }
-#else
-    UIVisualEffectView* hudView = [hud valueForKey:@"_hudView"];
-    if (hudView) {
-        for (id subView in hudView.subviews) {
-            if ([subView isKindOfClass:[SVIndefiniteAnimatedView class]]) {
-                [((UIView*)subView) removeFromSuperview];
-            }
-        }
-    }
-#endif
+    [self removeAnimatedViewWithSpecifiedClass:[CustomSVIndefiniteAnimatedView class]];
     [hud setValue:nil forKey:@"_indefiniteAnimatedView"];
     if ([SVProgressHUD isVisible]) {
         [SVProgressHUD show];
     }
 }
 
-+(void)setActivityIndicatorType:(DDActivityIndicatorAnimationType)type{
++ (void)removeAnimatedViewWithSpecifiedClass:(Class __nonnull)viewClass{
     SVProgressHUD* hud = [self getSVProgressHUD];
     if (!hud) {
         return;
     }
-    objc_setAssociatedObject(hud, DD_INDICATOR_TYPE_TAG, @(type) , OBJC_ASSOCIATION_RETAIN);
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
     UIVisualEffectView* hudVibrancyView = [hud valueForKey:@"_hudVibrancyView"];
     if (hudVibrancyView) {
         for (id subView in hudVibrancyView.contentView.subviews) {
-            if ([subView isKindOfClass:[SVIndefiniteAnimatedView class]]) {
+            if ([subView isKindOfClass:viewClass]) {
                 [((UIView*)subView) removeFromSuperview];
             }
         }
     }
-#else
-    UIVisualEffectView* hudView = [hud valueForKey:@"_hudView"];
-    if (hudView) {
-        for (id subView in hudView.subviews) {
-            if ([subView isKindOfClass:[SVIndefiniteAnimatedView class]]) {
-                [((UIView*)subView) removeFromSuperview];
-            }
-        }
+}
+
++ (void)setActivityIndicatorType:(DDActivityIndicatorAnimationType)type{
+    SVProgressHUD* hud = [self getSVProgressHUD];
+    if (!hud) {
+        return;
     }
-#endif
+    
+    objc_setAssociatedObject(hud, DD_INDICATOR_TYPE_TAG, @(type) , OBJC_ASSOCIATION_RETAIN);
+    
+    [self removeAnimatedViewWithSpecifiedClass:[SVIndefiniteAnimatedView class]];
+    
     [hud setValue:nil forKey:@"_indefiniteAnimatedView"];
     
     UIColor* tintColor = objc_getAssociatedObject(hud, DD_TINTCOLOR_TAG);
@@ -90,7 +72,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                     tintColor = [UIColor whiteColor];
                     break;
                 default:
-                    tintColor = [UIColor whiteColor];
+                    tintColor = [UIColor blackColor];
                     break;
             }
         }
@@ -102,7 +84,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
     }
 }
 
-+(void)updateActivityIndicator{
++ (void)updateActivityIndicator{
     SVProgressHUD* hud = [self getSVProgressHUD];
     NSNumber* type = objc_getAssociatedObject(hud, DD_INDICATOR_TYPE_TAG);
     if (type) {
@@ -110,14 +92,14 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
     }
 }
 
-+(void)setActivityIndicatorTintColor:(UIColor*)tintColor{
++ (void)setActivityIndicatorTintColor:(UIColor* __nonnull)tintColor{
     SVProgressHUD* hud = [self getSVProgressHUD];
     objc_setAssociatedObject(hud, DD_TINTCOLOR_TAG, tintColor , OBJC_ASSOCIATION_RETAIN);
     [self updateActivityIndicator];
     
 }
 
-+(SVProgressHUD*)getSVProgressHUD{
++ (SVProgressHUD* __nullable)getSVProgressHUD{
     SEL selector = NSSelectorFromString(@"sharedView");
     if ([SVProgressHUD respondsToSelector:selector]) {
         SVProgressHUD* hud = ((id(*)(id, SEL))[[SVProgressHUD class] methodForSelector:selector])([SVProgressHUD class], selector);
@@ -130,7 +112,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
 
 @implementation CustomSVIndefiniteAnimatedView
 
--(instancetype)initWithType:(DDActivityIndicatorAnimationType)type tintColor:(UIColor*)color{
+- (instancetype)initWithType:(DDActivityIndicatorAnimationType)type tintColor:(UIColor* __nonnull)color{
     self = [super init];
     if (self) {
         self.indicatorAnimationType = type;
@@ -198,7 +180,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:animationGroup forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeTriplePulse:{
             NSTimeInterval beginTime = CACurrentMediaTime();
@@ -233,7 +215,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:animationGroup forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeFiveDots:{
             NSTimeInterval beginTime = CACurrentMediaTime();
@@ -317,7 +299,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:transformAnimation forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeRotatingSquares:{
             NSTimeInterval beginTime = CACurrentMediaTime();
@@ -373,7 +355,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [square addAnimation:transformAnimation forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeDoubleBounce:{
             NSTimeInterval beginTime = CACurrentMediaTime();
@@ -409,7 +391,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
             }
             
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeTwoDots:{
             NSTimeInterval beginTime = CACurrentMediaTime();
@@ -445,7 +427,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:transformAnimation forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeThreeDots:{
             NSTimeInterval beginTime = CACurrentMediaTime();
@@ -490,7 +472,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:animation forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallPulse:{
             CGFloat circlePadding = 5.0f;
@@ -523,7 +505,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallClipRotate:{
             CGFloat duration = 0.75f;
@@ -564,7 +546,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
             [circle addAnimation:animation forKey:@"animation"];
             [layer addSublayer:circle];
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallClipRotatePulse:{
             CGFloat duration = 1.0f;
@@ -639,7 +621,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallClipRotateMultiple:{
             CGFloat bigDuration = 1.0f;
@@ -684,7 +666,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallRotate:{
             CGFloat duration = 1.0f;
@@ -747,7 +729,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
             [circle addAnimation:animation forKey:@"animation"];
             [layer addSublayer:circle];
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallZigZag:{
             CGFloat duration = 0.7f;
@@ -796,7 +778,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallZigZagDeflect:{
             CGFloat duration = 0.75f;
@@ -846,7 +828,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallTrianglePath:{
             CGFloat duration = 2.0f;
@@ -890,7 +872,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
             [bottomRigthCircle addAnimation:animation forKey:@"animation"];
             [layer addSublayer:bottomRigthCircle];
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallScale:{
             CGFloat duration = 1.0f;
@@ -928,7 +910,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
             circle.frame = CGRectMake((layer.bounds.size.width - size.width) / 2, (layer.bounds.size.height - size.height) / 2, size.width, size.height);
             [layer addSublayer:circle];
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeLineScale:{
             CGFloat duration = 1.0f;
@@ -960,7 +942,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:line];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeLineScaleParty:{
             NSArray *durations = @[@1.26f, @0.43f, @1.01f, @0.73f];
@@ -992,7 +974,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:line];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallScaleMultiple:{
             CGFloat duration = 1.0f;
@@ -1034,7 +1016,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallPulseSync:{
             CGFloat duration = 0.6f;
@@ -1069,7 +1051,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallBeat:{
             CGFloat duration = 0.7f;
@@ -1115,7 +1097,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeLineScalePulseOut:{
             CGFloat duration = 1.0f;
@@ -1147,7 +1129,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:line];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeLineScalePulseOutRapid:{
             CGFloat duration = 0.9f;
@@ -1179,7 +1161,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:line];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallScaleRipple:{
             CGFloat duration = 1.0f;
@@ -1221,7 +1203,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
             circle.frame = CGRectMake((layer.bounds.size.width - size.width) / 2, (layer.bounds.size.height - size.height) / 2, size.width, size.height);
             [layer addSublayer:circle];
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallScaleRippleMultiple:{
             CGFloat duration = 1.25f;
@@ -1268,7 +1250,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [layer addSublayer:circle];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeTriangleSkewSpin:{
             CGFloat duration = 3.0f;
@@ -1315,7 +1297,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
             triangle.frame = CGRectMake(x, y, size.width, size.height);
             [layer addSublayer:triangle];
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallGridBeat:{
             NSArray *durations = @[@0.96f, @0.93f, @1.19f, @1.13f, @1.34f, @0.94f, @1.2f, @0.82f, @1.19f];
@@ -1349,7 +1331,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 }
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeBallGridPulse:{
             NSArray *durations = @[@0.72f, @1.02f, @1.28f, @1.42f, @1.45f, @1.18f, @0.87f, @1.45f, @1.06f];
@@ -1395,7 +1377,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 }
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeRotatingSandglass:{
             
@@ -1443,7 +1425,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:transformAnimation forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeRotatingTrigons:{
             
@@ -1497,7 +1479,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:transformAnimation forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeTripleRings:{
             NSTimeInterval beginTime = CACurrentMediaTime();
@@ -1538,7 +1520,7 @@ static char const * const DD_INDICATOR_TYPE_TAG = "DD_INDICATOR_TYPE_TAG";
                 [circle addAnimation:animationGroup forKey:@"animation"];
             }
         }
-        break;
+            break;
             
         case DDActivityIndicatorAnimationTypeCookieTerminator:{
             NSTimeInterval beginTime = CACurrentMediaTime();

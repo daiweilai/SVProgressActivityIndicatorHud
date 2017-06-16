@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, DDActivityIndicatorAnimationType) {
 };
 
 @interface SVProgressHUD(DGActivityIndicatorView)
-+(void)setActivityIndicatorType:(DDActivityIndicatorAnimationType)type;
-+(void)setActivityIndicatorTintColor:(UIColor*)tintColor;
-+(void)unsetActivityIndicator;
++ (void)setActivityIndicatorType:(DDActivityIndicatorAnimationType)type;
++ (void)setActivityIndicatorTintColor:(UIColor* __nonnull)tintColor;
++ (void)unsetActivityIndicator;
 @end

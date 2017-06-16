@@ -21,6 +21,25 @@
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
 }
 
+- (IBAction)styleChange:(UISegmentedControl *)sender {
+    void(^changeStyle)(void) = ^{
+        if (sender.selectedSegmentIndex == 0) {
+            [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+        }else if (sender.selectedSegmentIndex == 1){
+            [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+        }else{
+            [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
+        }
+    };
+    if ([SVProgressHUD isVisible]) {
+        [SVProgressHUD dismissWithCompletion:^{
+            changeStyle();
+        }];
+    }else{
+        changeStyle();
+    }
+}
+
 - (IBAction)show:(UIButton *)sender {
     [SVProgressHUD show];
 }
