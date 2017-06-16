@@ -13,7 +13,7 @@ if you are using SVProgressHud in your project just skip this part！
 Otherwise,just check the [SVProgressHud installation guide](https://github.com/SVProgressHUD/SVProgressHUD).
 
 #### install SVProgressActivityIndicatorHud
-* Drag the SVProgressActivityIndicatorHud/SVProgressActivityIndicatorHud/Sources/* files into your project.
+* Drag the `SVProgressActivityIndicatorHud/SVProgressActivityIndicatorHud/Sources/*` files into your project.
 
 #### import
 
