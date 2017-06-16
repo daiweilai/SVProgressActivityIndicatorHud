@@ -1,6 +1,6 @@
 SVProgressActivityIndicatorHud
 =================================
-To enhance <a href="https://github.com/SVProgressHUD/SVProgressHUD" target="_blank">SVProgressHud</a>, let it support more beautify animation from [DGActivityIndicatorView](https://github.com/gontovnik/DGActivityIndicatorView){:target="_blank"}
+To enhance [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD), let it support more beautify animation from [DGActivityIndicatorView](https://github.com/gontovnik/DGActivityIndicatorView)
 
 Demo Snapshot  
 ----------------------------------- 
@@ -10,7 +10,7 @@ Using
 -----------------------------------
 #### install SVProgressHud
 if you are using SVProgressHud in your project just skip this part！
-Otherwise,just check the [SVProgressHud installation guide](https://github.com/SVProgressHUD/SVProgressHUD){:target="_blank"} .
+Otherwise,just check the [SVProgressHud installation guide](https://github.com/SVProgressHUD/SVProgressHUD).
 
 #### install SVProgressActivityIndicatorHud
 * Drag the SVProgressActivityIndicatorHud/SVProgressActivityIndicatorHud/Sources/* files into your project.
